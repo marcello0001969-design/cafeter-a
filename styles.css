@@ -1,0 +1,81 @@
+/* ============================================================================
+ARCHIVO: styles.css
+CUÁNDO SE UTILIZA:
+
+Se carga en el  de index.html mediante .
+
+El navegador lo interpreta antes de dibujar la página para aplicar:
+
+Variables CSS nativas (Design Tokens Japandi).
+
+Animaciones de fotogramas clave (@keyframes) para la torre Kyoto Drip.
+
+Estilos personalizados de barra de desplazamiento (scrollbar) y tarjetas.
+============================================================================ */
+
+/* 1. Variables CSS Nativas (Design Tokens globales) */
+:root {
+--color-washi: #F8F6F0;
+--color-sand: #EFECE4;
+--color-charcoal: #23211E;
+--color-matcha: #4A5D4E;
+--color-terracotta: #B86B4B;
+--color-wood: #D6CFC2;
+}
+
+/* 2. Animación del goteo lento para la ilustración SVG Kyoto Drip */
+@keyframes slowDrip {
+0% {
+transform: translateY(0px);
+opacity: 0;
+}
+30% {
+opacity: 1;
+}
+85% {
+transform: translateY(14px);
+opacity: 0.9;
+}
+100% {
+transform: translateY(18px);
+opacity: 0;
+}
+}
+
+.kyoto-drop-water {
+animation: slowDrip 3.2s infinite ease-in;
+}
+
+/* Desfase de 1.6s para alternar la caída de agua y café */
+.kyoto-drop-coffee {
+animation: slowDrip 3.2s infinite ease-in 1.6s;
+}
+
+/* 3. Estilo personalizado para la bitácora de actividad (Scrollbar Japandi) */
+.custom-scrollbar::-webkit-scrollbar {
+width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+background: var(--color-sand);
+border-radius: 9999px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+background: var(--color-wood);
+border-radius: 9999px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+background: var(--color-matcha);
+}
+
+/* 4. Clase utilitaria para tarjetas interactivas con elevación sutil */
+.japandi-card {
+transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.japandi-card:hover {
+transform: translateY(-2px);
+box-shadow: 0 10px 25px -10px rgba(35, 33, 30, 0.08);
+}

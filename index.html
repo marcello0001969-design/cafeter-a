@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ookini (おおきに) | Café de Especialidad</title>
+
+    <!-- =========================================================================
+         CONEXIÓN DE RECURSOS EXTERNOS Y ARCHIVOS LOCALES
+         1. Tailwind CSS (CDN): Framework de clases utilitarias para diseño responsivo.
+         2. Google Fonts: Tipografías 'Inter' y 'Noto Serif JP'.
+         3. styles.css: Archivo local con variables CSS, animaciones y estilos propios.
+         ========================================================================= -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Noto+Serif+JP:wght@400;600&display=swap" rel="stylesheet">
+    
+    <!-- Configuración de paleta Japandi para Tailwind -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Noto Serif JP', 'serif'],
+                    },
+                    colors: {
+                        washi: '#F8F6F0',      // Fondo papel japonés cálido
+                        sand: '#EFECE4',       // Superficies secundarias
+                        charcoal: '#23211E',   // Texto principal carbón suave
+                        stone: '#6B665E',      // Texto secundario
+                        matcha: '#4A5D4E',     // Acento verde bosque/matcha
+                        terracotta: '#B86B4B', // Acento arcilla/café tostado
+                        wood: '#D6CFC2',       // Bordes sutiles
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- ENLACE AL ARCHIVO CSS EXTERNO -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<!-- =========================================================================
+     ESTRUCTURA SEMÁNTICA (HTML5)
+     Conecta con app.js mediante:
+     - Atributos 'id="..."' para leer entradas y actualizar contadores en el DOM.
+     - Eventos ('onclick', 'onsubmit', 'oninput', 'onchange') que ejecutan funciones JS.
+     ========================================================================= -->
+<body class="bg-washi text-charcoal font-sans antialiased selection:bg-matcha selection:text-white">
+
+    <!-- ==================== NAVEGACIÓN ==================== -->
+    <header class="sticky top-0 z-40 bg-washi/90 backdrop-blur-md border-b border-wood/60">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- Logo -->
+            <a href="#" class="flex items-center gap-3 group">
+                <div class="w-10 h-10 rounded-full bg-charcoal text-washi flex items-center justify-center font-serif text-lg tracking-widest group-hover:bg-matcha transition-colors">
+                    大
+                </div>
+                <div>
+                    <span class="font-serif text-xl font-semibold tracking-tight block leading-none">Ookini</span>
+                    <span class="text-[11px] uppercase tracking-[0.2em] text-stone">Specialty Coffee</span>
+                </div>
+            </a>
+
+            <!-- Enlaces Desktop -->
+            <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-stone">
+                <a href="#filosofia" class="hover:text-charcoal transition-colors">Filosofía</a>
+                <a href="#menu" class="hover:text-charcoal transition-colors">Métodos & Menú</a>
+                <a href="#simulador" class="hover:text-charcoal transition-colors">Reservas & Pedidos</a>
+                <a href="#horarios" class="hover:text-charcoal transition-colors">Horarios</a>
+            </nav>
+
+            <!-- Botón CTA -->
+            <a href="#simulador" class="px-5 py-2.5 rounded-full bg-charcoal text-washi text-sm font-medium hover:bg-matcha transition-colors shadow-sm">
+                Reservar Taza
+            </a>
+        </div>
+    </header>
+
+    <!-- ==================== HERO SECTION ==================== -->
+    <section class="relative overflow-hidden py-16 sm:py-24 lg:py-32 border-b border-wood/60">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                <!-- Columna de Texto -->
+                <div class="lg:col-span-7 space-y-6">
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-sand border border-wood text-xs font-medium text-stone">
+                        <span class="w-2 h-2 rounded-full bg-matcha animate-pulse"></span>
+                        <span>Abierto hoy · 8:00 a. m. – 8:00 p. m.</span>
+                    </div>
+                    
+                    <h1 class="font-serif text-4xl sm:text-5xl lg:text-6xl font-normal tracking-tight text-charcoal leading-[1.15]">
+                        El arte de agradecer en cada extracción lenta.
+                    </h1>
+                    
+                    <p class="text-base sm:text-lg text-stone max-w-xl leading-relaxed">
+                        En la región de Kansai, <em class="text-charcoal font-medium not-italic">“Ookini”</em> significa gracias. Honramos la tradición de Kioto extrayendo cada taza con precisión, paciencia y respeto por el grano de origen.
+                    </p>
+
+                    <div class="pt-4 flex flex-wrap items-center gap-4">
+                        <a href="#simulador" class="px-7 py-3.5 rounded-full bg-charcoal text-washi text-sm font-medium hover:bg-matcha transition-all shadow-sm">
+                            Simular Reserva o Pedido
+                        </a>
+                        <a href="#menu" class="px-7 py-3.5 rounded-full bg-transparent border border-charcoal/30 text-charcoal text-sm font-medium hover:border-charcoal transition-all">
+                            Explorar Métodos
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Columna Visual (SVG animado en styles.css + Contadores conectados a app.js) -->
+                <div class="lg:col-span-5">
+                    <div class="relative rounded-3xl bg-sand p-8 border border-wood/80 shadow-sm japandi-card">
+                        <div class="aspect-square rounded-2xl bg-washi border border-wood/50 flex flex-col items-center justify-center p-6 relative overflow-hidden">
+                            <svg class="w-48 h-48 text-charcoal" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <!-- Estructura de madera -->
+                                <line x1="55" y1="25" x2="55" y2="175" stroke="#B86B4B" stroke-width="4" stroke-linecap="round"/>
+                                <line x1="145" y1="25" x2="145" y2="175" stroke="#B86B4B" stroke-width="4" stroke-linecap="round"/>
+                                <line x1="45" y1="175" x2="155" y2="175" stroke="#23211E" stroke-width="5" stroke-linecap="round"/>
+                                <line x1="50" y1="65" x2="150" y2="65" stroke="#D6CFC2" stroke-width="3"/>
+                                <line x1="50" y1="115" x2="150" y2="115" stroke="#D6CFC2" stroke-width="3"/>
+                                
+                                <!-- Recipiente superior -->
+                                <path d="M80 30 H120 L114 60 H86 L80 30 Z" stroke="#23211E" stroke-width="2.5" fill="#EFECE4"/>
+                                <!-- Gota de agua animada por styles.css -->
+                                <circle class="kyoto-drop-water" cx="100" cy="64" r="2.5" fill="#4A5D4E"/>
+                                
+                                <!-- Cámara intermedia -->
+                                <rect x="84" y="84" width="32" height="28" rx="4" stroke="#23211E" stroke-width="2.5" fill="#D6CFC2"/>
+                                
+                                <!-- Gota de café animada por styles.css -->
+                                <circle class="kyoto-drop-coffee" cx="100" cy="114" r="2.5" fill="#B86B4B"/>
+                                
+                                <!-- Jarra inferior -->
+                                <path d="M85 132 H115 L123 168 H77 L85 132 Z" stroke="#23211E" stroke-width="2.5" fill="#F8F6F0"/>
+                                <path d="M80 152 H120 L122 167 H78 L80 152 Z" fill="#B86B4B" fill-opacity="0.35"/>
+                            </svg>
+                            <span class="mt-4 font-serif text-sm text-stone tracking-widest uppercase">Kyoto Slow Drip · 12h</span>
+                        </div>
+
+                        <!-- Indicadores actualizados dinámicamente desde app.js -->
+                        <div class="mt-6 grid grid-cols-2 gap-4 pt-4 border-t border-wood/70">
+                            <div>
+                                <p class="text-xs text-stone">Tazas Especiales Hoy</p>
+                                <p class="text-lg font-semibold text-charcoal mt-0.5"><span id="hero-special-left">50</span> <span class="text-xs font-normal text-stone">/ 50 disp.</span></p>
+                            </div>
+                            <div>
+                                <p class="text-xs text-stone">Cata Semanal</p>
+                                <p class="text-lg font-semibold text-charcoal mt-0.5"><span id="hero-tasting-left">8</span> <span class="text-xs font-normal text-stone">/ 8 cupos</span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== FILOSOFÍA / ORIGEN ==================== -->
+    <section id="filosofia" class="py-16 sm:py-24 border-b border-wood/60 bg-sand/40">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
+            <span class="text-xs font-semibold uppercase tracking-[0.25em] text-matcha">Kansai · Kioto · Tradición</span>
+            <h2 class="font-serif text-3xl sm:text-4xl text-charcoal">¿Por qué Ookini?</h2>
+            <p class="text-stone text-base sm:text-lg leading-relaxed">
+                En el dialecto de Kansai —la región cultural que alberga a Kioto, cuna del icónico método de extracción en frío <em>Kyoto drip</em>—, decir <strong class="text-charcoal font-medium">Ookini (おおきに)</strong> es mucho más que una cortesía: es reconocer el esfuerzo detrás de cada encuentro.
+            </p>
+            <p class="text-stone text-base leading-relaxed">
+                Para garantizar una extracción impecable y sin prisas, limitamos nuestra producción artesanal a <strong class="text-charcoal font-medium">50 tazas de métodos especiales por día</strong> (máximo 2 por persona), manteniendo siempre abierta nuestra barra de <strong class="text-charcoal font-medium">Prensa Francesa walk-in</strong> para quienes buscan una taza reconfortante al instante.
+            </p>
+        </div>
+    </section>
+
+    <!-- ==================== MENÚ Y REGLAS DE NEGOCIO ==================== -->
+    <section id="menu" class="py-16 sm:py-24 border-b border-wood/60">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
+                <div>
+                    <span class="text-xs font-semibold uppercase tracking-[0.25em] text-terracotta">Carta de Extracciones</span>
+                    <h2 class="font-serif text-3xl sm:text-4xl text-charcoal mt-2">Nuestros Métodos</h2>
+                </div>
+                <p class="text-sm text-stone max-w-md">
+                    Todos los precios están expresados en dólares estadounidenses (USD). Selecciona tu experiencia según el tiempo que desees dedicarle a tu taza.
+                </p>
+            </div>
+
+            <!-- Grid de 3 Categorías -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                
+                <!-- 1. Preparaciones Especiales con Reserva -->
+                <div class="rounded-3xl bg-sand/70 border border-wood p-7 flex flex-col justify-between japandi-card">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="px-3 py-1 rounded-full bg-matcha/15 text-matcha text-xs font-semibold">Con Reserva</span>
+                            <span class="text-xs font-medium text-stone">Máx. 2 / persona</span>
+                        </div>
+                        <h3 class="font-serif text-2xl text-charcoal mb-2">Filtrados Especiales</h3>
+                        <p class="text-sm text-stone mb-6">
+                            Métodos de precisión y extracción lenta. Producción estricta de <strong class="text-charcoal">50 tazas diarias</strong> en total.
+                        </p>
+
+                        <ul class="space-y-4 border-t border-wood/80 pt-5">
+                            <li class="flex items-start justify-between gap-4">
+                                <div>
+                                    <h4 class="font-medium text-charcoal">V60 Pour-Over</h4>
+                                    <p class="text-xs text-stone mt-0.5">Claridad aromática, notas florales y acidez brillante.</p>
+                                </div>
+                                <span class="font-serif font-semibold text-lg text-charcoal">$5</span>
+                            </li>
+                            <li class="flex items-start justify-between gap-4">
+                                <div>
+                                    <h4 class="font-medium text-charcoal">Kyoto Drip</h4>
+                                    <p class="text-xs text-stone mt-0.5">Goteo en frío de 12 horas. Sedoso, licoroso y dulce.</p>
+                                </div>
+                                <span class="font-serif font-semibold text-lg text-charcoal">$7</span>
+                            </li>
+                            <li class="flex items-start justify-between gap-4">
+                                <div>
+                                    <h4 class="font-medium text-charcoal">Siphon (Vacío)</h4>
+                                    <p class="text-xs text-stone mt-0.5">Extracción teatral por presión de vapor. Cuerpo limpio y complejo.</p>
+                                </div>
+                                <span class="font-serif font-semibold text-lg text-charcoal">$8</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="mt-8 pt-4 border-t border-wood/80 flex items-center justify-between text-xs">
+                        <span class="text-stone">Cupo diario compartido:</span>
+                        <span class="font-semibold text-matcha" id="card-special-badge">50 tazas disponibles</span>
+                    </div>
+                </div>
+
+                <!-- 2. Prensa Francesa Walk-In -->
+                <div class="rounded-3xl bg-sand/70 border border-wood p-7 flex flex-col justify-between japandi-card">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="px-3 py-1 rounded-full bg-charcoal/10 text-charcoal text-xs font-semibold">Walk-in (Sin Reserva)</span>
+                            <span class="text-xs font-medium text-stone">Sin límite / persona</span>
+                        </div>
+                        <h3 class="font-serif text-2xl text-charcoal mb-2">Prensa Francesa</h3>
+                        <p class="text-sm text-stone mb-6">
+                            Inmersión clásica disponible durante todo nuestro horario de atención, sin necesidad de reserva previa.
+                        </p>
+
+                        <div class="rounded-2xl bg-washi p-5 border border-wood/70">
+                            <div class="flex items-center justify-between">
+                                <h4 class="font-medium text-charcoal">Taza de Inmersión</h4>
+                                <span class="font-serif font-semibold text-2xl text-charcoal">$3</span>
+                            </div>
+                            <p class="text-xs text-stone mt-2 leading-relaxed">
+                                Cuerpo robusto, aceites naturales preservados y textura aterciopelada. Ideal para acompañar la lectura o una charla tranquila.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="mt-8 pt-4 border-t border-wood/80 flex items-center justify-between text-xs">
+                        <span class="text-stone">Disponibilidad:</span>
+                        <span class="font-semibold text-charcoal">8:00 a. m. – 8:00 p. m.</span>
+                    </div>
+                </div>
+
+                <!-- 3. Cata Semanal -->
+                <div class="rounded-3xl bg-charcoal text-washi p-7 flex flex-col justify-between shadow-md japandi-card">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="px-3 py-1 rounded-full bg-terracotta text-white text-xs font-semibold">Evento Semanal</span>
+                            <span class="text-xs text-wood">8 cupos máximos</span>
+                        </div>
+                        <h3 class="font-serif text-2xl text-white mb-2">Cata Guiada Ookini</h3>
+                        <p class="text-sm text-wood/90 mb-6">
+                            Una sesión íntima por semana dirigida por nuestro barista principal para explorar perfiles sensoriales y orígenes.
+                        </p>
+
+                        <div class="rounded-2xl bg-white/5 p-5 border border-white/10">
+                            <div class="flex items-center justify-between">
+                                <h4 class="font-medium text-white">Pase por Persona</h4>
+                                <span class="font-serif font-semibold text-2xl text-terracotta">$25</span>
+                            </div>
+                            <ul class="text-xs text-wood mt-3 space-y-1.5">
+                                <li>• Degustación comparativa de 4 orígenes</li>
+                                <li>• Calibración olfativa y notas de cata</li>
+                                <li>• Duración aproximada: 90 minutos</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="mt-8 pt-4 border-t border-white/15 flex items-center justify-between text-xs">
+                        <span class="text-wood">Cupos esta semana:</span>
+                        <span class="font-semibold text-terracotta" id="card-tasting-badge">8 lugares libres</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== SIMULADOR INTERACTIVO DE RESERVAS Y PEDIDOS ==================== -->
+    <section id="simulador" class="py-16 sm:py-24 bg-sand/50 border-b border-wood/60">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-2xl mb-10">
+                <span class="text-xs font-semibold uppercase tracking-[0.25em] text-matcha">Sistema Interactivo</span>
+                <h2 class="font-serif text-3xl sm:text-4xl text-charcoal mt-2">Reservas y Pedidos en Vivo</h2>
+                <p class="text-sm sm:text-base text-stone mt-2">
+                    Prueba nuestras reglas de operación en tiempo real: el sistema controla el inventario diario de 50 tazas especiales, el límite de 2 tazas por cliente y los 8 cupos de la cata semanal.
+                </p>
+            </div>
+
+            <!-- Panel de Indicadores en Tiempo Real -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
+                <!-- Indicador 1: Tazas Especiales -->
+                <div class="rounded-2xl bg-washi p-5 border border-wood">
+                    <div class="flex justify-between items-center text-xs text-stone mb-2">
+                        <span>Cupo Diario Especiales</span>
+                        <span id="special-counter-text" class="font-semibold text-charcoal">50 / 50</span>
+                    </div>
+                    <div class="w-full h-2.5 bg-sand rounded-full overflow-hidden">
+                        <div id="special-progress-bar" class="h-full bg-matcha transition-all duration-300" style="width: 100%"></div>
+                    </div>
+                    <p class="text-[11px] text-stone mt-2">Máximo 2 tazas especiales por cliente.</p>
+                </div>
+
+                <!-- Indicador 2: Cata Semanal -->
+                <div class="rounded-2xl bg-washi p-5 border border-wood">
+                    <div class="flex justify-between items-center text-xs text-stone mb-2">
+                        <span>Cupos Cata Semanal</span>
+                        <span id="tasting-counter-text" class="font-semibold text-charcoal">8 / 8</span>
+                    </div>
+                    <div class="w-full h-2.5 bg-sand rounded-full overflow-hidden">
+                        <div id="tasting-progress-bar" class="h-full bg-terracotta transition-all duration-300" style="width: 100%"></div>
+                    </div>
+                    <p class="text-[11px] text-stone mt-2">$25 por persona · Requiere reserva.</p>
+                </div>
+
+                <!-- Indicador 3: Prensa Francesa Walk-in -->
+                <div class="rounded-2xl bg-washi p-5 border border-wood flex flex-col justify-between">
+                    <div class="flex justify-between items-center text-xs text-stone">
+                        <span>Prensa Francesa Walk-in</span>
+                        <span class="px-2 py-0.5 rounded bg-matcha/15 text-matcha font-semibold">Ilimitado</span>
+                    </div>
+                    <p class="text-sm font-medium text-charcoal my-1">Vendidas hoy: <span id="french-press-sold" class="font-bold">0</span> tazas</p>
+                    <p class="text-[11px] text-stone">$3 por taza · Sin reserva previa.</p>
+                </div>
+            </div>
+
+            <!-- Contenedor Principal del Simulador -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                
+                <!-- Formulario de Operación (7 columnas) -->
+                <div class="lg:col-span-7 rounded-3xl bg-washi border border-wood p-6 sm:p-8 shadow-sm">
+                    <!-- Selector de Pestañas -->
+                    <div class="grid grid-cols-3 gap-2 p-1.5 rounded-2xl bg-sand mb-6" role="tablist">
+                        <button type="button" onclick="switchTab('especial')" id="tab-especial" class="py-2.5 px-3 rounded-xl text-xs sm:text-sm font-medium bg-charcoal text-washi shadow-sm transition-all">
+                            1. Especial (Reserva)
+                        </button>
+                        <button type="button" onclick="switchTab('walkin')" id="tab-walkin" class="py-2.5 px-3 rounded-xl text-xs sm:text-sm font-medium text-stone hover:text-charcoal transition-all">
+                            2. Walk-in ($3)
+                        </button>
+                        <button type="button" onclick="switchTab('cata')" id="tab-cata" class="py-2.5 px-3 rounded-xl text-xs sm:text-sm font-medium text-stone hover:text-charcoal transition-all">
+                            3. Cata ($25)
+                        </button>
+                    </div>
+
+                    <!-- Caja de Mensajes / Validación -->
+                    <div id="feedback-box" class="hidden mb-6 p-4 rounded-2xl text-sm border transition-all"></div>
+
+                    <!-- FORMULARIO 1: Preparaciones Especiales -->
+                    <form id="form-especial" onsubmit="handleSpecialReservation(event)" class="space-y-5">
+                        <div>
+                            <label for="special-name" class="block text-xs font-semibold uppercase tracking-wider text-stone mb-2">Nombre del Cliente</label>
+                            <input type="text" id="special-name" required placeholder="Ej. Kenji Takahashi" class="w-full px-4 py-3 rounded-xl bg-sand/60 border border-wood text-charcoal text-sm focus:outline-none focus:border-matcha">
+                            <p class="text-[11px] text-stone mt-1">Validamos por nombre que cada cliente no supere 2 tazas especiales al día.</p>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label for="special-method" class="block text-xs font-semibold uppercase tracking-wider text-stone mb-2">Método de Extracción</label>
+                                <select id="special-method" onchange="updateFormSummary()" class="w-full px-4 py-3 rounded-xl bg-sand/60 border border-wood text-charcoal text-sm focus:outline-none focus:border-matcha">
+                                    <option value="V60" data-price="5">V60 ($5 / taza)</option>
+                                    <option value="Kyoto drip" data-price="7">Kyoto drip ($7 / taza)</option>
+                                    <option value="Siphon" data-price="8">Siphon ($8 / taza)</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label for="special-qty" class="block text-xs font-semibold uppercase tracking-wider text-stone mb-2">Cantidad de Tazas</label>
+                                <select id="special-qty" onchange="updateFormSummary()" class="w-full px-4 py-3 rounded-xl bg-sand/60 border border-wood text-charcoal text-sm focus:outline-none focus:border-matcha">
+                                    <option value="1">1 taza</option>
+                                    <option value="2">2 tazas (Máximo permitido)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="p-4 rounded-2xl bg-sand/70 flex items-center justify-between">
+                            <span class="text-sm text-stone">Total a pagar en barra:</span>
+                            <span id="special-total-preview" class="font-serif text-2xl font-semibold text-charcoal">$5</span>
+                        </div>
+
+                        <button type="submit" id="btn-submit-especial" class="w-full py-3.5 rounded-full bg-charcoal text-washi text-sm font-medium hover:bg-matcha transition-colors shadow-sm">
+                            Confirmar Reserva Especial
+                        </button>
+                    </form>
+
+                    <!-- FORMULARIO 2: Prensa Francesa Walk-In -->
+                    <form id="form-walkin" onsubmit="handleWalkinOrder(event)" class="hidden space-y-5">
+                        <div>
+                            <label for="walkin-name" class="block text-xs font-semibold uppercase tracking-wider text-stone mb-2">Nombre (Opcional)</label>
+                            <input type="text" id="walkin-name" placeholder="Cliente Walk-in" class="w-full px-4 py-3 rounded-xl bg-sand/60 border border-wood text-charcoal text-sm focus:outline-none focus:border-matcha">
+                        </div>
+
+                        <div>
+                            <label for="walkin-qty" class="block text-xs font-semibold uppercase tracking-wider text-stone mb-2">Cantidad de Tazas de Prensa Francesa ($3 c/u)</label>
+                            <input type="number" id="walkin-qty" min="1" value="1" oninput="updateFormSummary()" required class="w-full px-4 py-3 rounded-xl bg-sand/60 border border-wood text-charcoal text-sm focus:outline-none focus:border-matcha">
+                            <p class="text-[11px] text-stone mt-1">Sin reserva y sin límite por persona durante el horario de atención.</p>
+                        </div>
+
+                        <div class="p-4 rounded-2xl bg-sand/70 flex items-center justify-between">
+                            <span class="text-sm text-stone">Total pedido inmediato:</span>
+                            <span id="walkin-total-preview" class="font-serif text-2xl font-semibold text-charcoal">$3</span>
+                        </div>
+
+                        <button type="submit" class="w-full py-3.5 rounded-full bg-charcoal text-washi text-sm font-medium hover:bg-matcha transition-colors shadow-sm">
+                            Registrar Pedido Walk-in
+                        </button>
+                    </form>
+
+                    <!-- FORMULARIO 3: Cata Semanal -->
+                    <form id="form-cata" onsubmit="handleTastingReservation(event)" class="hidden space-y-5">
+                        <div>
+                            <label for="tasting-name" class="block text-xs font-semibold uppercase tracking-wider text-stone mb-2">Nombre del Asistente / Grupo</label>
+                            <input type="text" id="tasting-name" required placeholder="Ej. Sofía Martínez" class="w-full px-4 py-3 rounded-xl bg-sand/60 border border-wood text-charcoal text-sm focus:outline-none focus:border-matcha">
+                        </div>
+
+                        <div>
+                            <label for="tasting-spots" class="block text-xs font-semibold uppercase tracking-wider text-stone mb-2">Cupos a Reservar ($25 / persona)</label>
+                            <input type="number" id="tasting-spots" min="1" max="8" value="1" oninput="updateFormSummary()" required class="w-full px-4 py-3 rounded-xl bg-sand/60 border border-wood text-charcoal text-sm focus:outline-none focus:border-matcha">
+                            <p class="text-[11px] text-stone mt-1">Capacidad estricta de 8 personas por sesión semanal.</p>
+                        </div>
+
+                        <div class="p-4 rounded-2xl bg-sand/70 flex items-center justify-between">
+                            <span class="text-sm text-stone">Total reserva de cata:</span>
+                            <span id="tasting-total-preview" class="font-serif text-2xl font-semibold text-charcoal">$25</span>
+                        </div>
+
+                        <button type="submit" id="btn-submit-cata" class="w-full py-3.5 rounded-full bg-terracotta text-white text-sm font-medium hover:opacity-90 transition-opacity shadow-sm">
+                            Reservar Cupo en Cata Semanal
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Bitácora de Actividad / Estado del Día (5 columnas) -->
+                <div class="lg:col-span-5 rounded-3xl bg-washi border border-wood p-6 sm:p-8 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="font-serif text-xl text-charcoal">Registro del Día</h3>
+                            <button type="button" onclick="resetSimulation()" class="text-xs text-stone hover:text-terracotta underline transition-colors">
+                                Reiniciar día
+                            </button>
+                        </div>
+                        <p class="text-xs text-stone mb-4">
+                            Historial de transacciones validadas por las reglas de negocio de Ookini.
+                        </p>
+
+                        <!-- Lista de registros estilizada con .custom-scrollbar en styles.css -->
+                        <div id="activity-log" class="space-y-3 max-h-[340px] overflow-y-auto pr-1 custom-scrollbar">
+                            <div class="text-center py-10 px-4 rounded-2xl bg-sand/50 border border-dashed border-wood text-xs text-stone">
+                                Aún no hay reservas ni pedidos registrados hoy. Utiliza el panel izquierdo para simular una operación.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Total recaudado del día -->
+                    <div class="mt-6 pt-4 border-t border-wood flex items-center justify-between">
+                        <span class="text-xs uppercase tracking-wider font-semibold text-stone">Ingresos Simulados</span>
+                        <span id="daily-revenue" class="font-serif text-2xl font-semibold text-matcha">$0</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== HORARIOS Y CONTACTO (PLACEHOLDER MODULAR) ==================== -->
+    <footer id="horarios" class="py-16 bg-charcoal text-washi">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10 pb-12 border-b border-white/15">
+                
+                <!-- Marca -->
+                <div class="space-y-3">
+                    <div class="flex items-center gap-3">
+                        <div class="w-9 h-9 rounded-full bg-washi text-charcoal flex items-center justify-center font-serif text-base">
+                            大
+                        </div>
+                        <span class="font-serif text-xl tracking-tight">Ookini Coffee</span>
+                    </div>
+                    <p class="text-sm text-wood/80 leading-relaxed">
+                        Café de especialidad inspirado en la hospitalidad de Kansai y los métodos de extracción lenta de Kioto.
+                    </p>
+                </div>
+
+                <!-- Horario Oficial -->
+                <div class="space-y-3">
+                    <h4 class="text-xs font-semibold uppercase tracking-[0.2em] text-terracotta">Horario de Atención</h4>
+                    <p class="text-lg font-serif text-white">Todos los días</p>
+                    <p class="text-sm text-wood">8:00 a. m. – 8:00 p. m.</p>
+                    <p class="text-xs text-wood/70 pt-1">
+                        * Preparaciones especiales sujetas al límite diario de 50 tazas.
+                    </p>
+                </div>
+
+                <!-- Ubicación y Contacto -->
+                <div class="space-y-3">
+                    <h4 class="text-xs font-semibold uppercase tracking-[0.2em] text-terracotta">Ubicación & Contacto</h4>
+                    <div class="p-4 rounded-2xl bg-white/5 border border-dashed border-white/20 text-xs text-wood/80 space-y-1.5">
+                        <p class="font-medium text-white">📍 Dirección por definir</p>
+                        <p>✉️ contacto@ookinicoffee.com (Próximamente)</p>
+                        <p class="text-[11px] text-wood/60 pt-1">Sección lista para incorporar datos reales de contacto y mapa.</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-wood/60 gap-4">
+                <p>© 2026 Ookini Specialty Coffee. Todos los derechos reservados.</p>
+                <p>Precios expresados en USD · おおきに</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- =========================================================================
+         ENLACE AL ARCHIVO JAVASCRIPT EXTERNO
+         Se ubica al final del <body> para garantizar que todos los elementos HTML
+         existan en el DOM antes de que el script intente seleccionarlos.
+         ========================================================================= -->
+    <script src="app.js"></script>
+</body>
+</html>
